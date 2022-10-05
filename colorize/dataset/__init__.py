@@ -1,1 +1,1 @@
-from .loader import get_loader
+from .loader import get_loaders

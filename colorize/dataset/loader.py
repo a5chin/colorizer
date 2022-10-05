@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from torchvision.datasets import CIFAR100
 
 
-def get_loader(
+def get_loaders(
     args: argparse.Namespace, transforms: torch.nn.Module
 ) -> Tuple[DataLoader, DataLoader]:
     traindataset = CIFAR100(
