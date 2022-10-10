@@ -27,9 +27,9 @@ class Trainer:
             "cuda:0" if torch.cuda.is_available() else "cpu"
         )
         self.model = Colorizer()
-        self.best_loss = 0.0
+        self.best_loss = float("inf")
         self.criterion = nn.MSELoss()
-        self.optimizer = optim.Adam(self.model.parameters(), lr=1e-3)
+        self.optimizer = optim.Adam(self.model.parameters(), lr=1e-4)
         self.log_dir = Path(args.log_dir)
         self.writer = SummaryWriter(log_dir=self.log_dir.as_posix())
 
