@@ -2,9 +2,9 @@ import argparse
 import sys
 from pathlib import Path
 
-from PIL import Image
-import torch
 import matplotlib.pyplot as plt
+import torch
+from PIL import Image
 
 current_dir = Path(__file__).resolve().parent
 sys.path.append(current_dir.parent.as_posix())
