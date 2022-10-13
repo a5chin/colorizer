@@ -26,12 +26,12 @@ jobs:
 
     - name: Test with isort
       run: |
-        isort --check colorize/
+        isort --check colorize/ examples/
 
     - name: Test with black
       run: |
-        black --check colorize/
+        black --check colorize/ examples/
 
     - name: Test with flake8
       run: |
-        flake8 colorize/ --statistics --count --show-source
+        flake8 colorize/ examples/ --statistics --count --show-source
