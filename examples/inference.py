@@ -34,7 +34,7 @@ def make_parse() -> argparse.Namespace:
 
 def main():
     args = make_parse()
-    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     transforms = get_transforms()["test"]
 
     model = Colorizer()
@@ -44,7 +44,7 @@ def main():
 
     gray = Image.open(args.image)
     images = transforms(gray).unsqueeze(dim=0)
-    color = model(images).to('cpu').detach().squeeze().permute(1, 2, 0)
+    color = model(images).to("cpu").detach().squeeze().permute(1, 2, 0)
 
     plt.imshow(color)
     plt.show()
