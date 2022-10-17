@@ -26,6 +26,7 @@ jobs:
 
     - name: Test with isort
       run: |
+<<<<<<< HEAD
         isort --check colorize/
 
     - name: Test with black
@@ -35,3 +36,14 @@ jobs:
     - name: Test with flake8
       run: |
         flake8 colorize/ --statistics --count --show-source
+=======
+        isort --check colorize/ examples/
+
+    - name: Test with black
+      run: |
+        black --check colorize/ examples/
+
+    - name: Test with flake8
+      run: |
+        flake8 colorize/ examples/ --statistics --count --show-source
+>>>>>>> 4fc66d897e10c9c2619678a8dfd28828f6e383e2
