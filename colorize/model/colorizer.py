@@ -73,7 +73,7 @@ class Colorizer(nn.Module):
                 padding=1,
             ),
             nn.BatchNorm2d(3),
-            nn.LeakyReLU(),
+            nn.Sigmoid(),
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
