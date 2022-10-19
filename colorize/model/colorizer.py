@@ -1,12 +1,16 @@
 import torch
 from torch import nn
 
+from ..losses import CrayLoss
+
 
 class Colorizer(nn.Module):
     BASE_CHANNEl = 64
 
     def __init__(self) -> None:
         super().__init__()
+        self.mse_loss = nn.MSELoss()
+        self.cray_loss = CrayLoss()
 
         self.layer1 = nn.Sequential(
             nn.Conv2d(
@@ -85,6 +89,12 @@ class Colorizer(nn.Module):
         x6 = self.layer6(x5)
 
         return x6
+
+    def loss(self, input: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        mse = self.mse_loss(input, target)
+        cray = self.cray_loss(input, target)
+
+        return mse + cray
 
     @staticmethod
     def init_weights(m: nn.Module) -> None:
