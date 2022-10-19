@@ -1,5 +1,4 @@
-import torch
-from torch import nn
+from torch import Tensor, nn
 
 from ..losses import CrayLoss
 
@@ -80,7 +79,7 @@ class Colorizer(nn.Module):
             nn.Sigmoid(),
         )
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         x1 = self.layer1(x)
         x2 = self.layer2(x1)
         x3 = self.layer3(x2)
@@ -90,7 +89,7 @@ class Colorizer(nn.Module):
 
         return x6
 
-    def loss(self, input: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+    def loss(self, input: Tensor, target: Tensor) -> Tensor:
         mse = self.mse_loss(input, target)
         cray = self.cray_loss(input, target)
 
