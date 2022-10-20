@@ -28,7 +28,6 @@ class Trainer:
         )
         self.model = Colorizer()
         self.best_loss = float("inf")
-        self.criterion = nn.MSELoss()
         self.optimizer = optim.Adam(self.model.parameters(), lr=1e-4)
         self.log_dir = Path(args.log_dir)
         self.writer = SummaryWriter(log_dir=self.log_dir.as_posix())
@@ -51,7 +50,7 @@ class Trainer:
 
                     out = self.model(gray)
 
-                    loss = self.criterion(out, color)
+                    loss = self.model.loss(out, color)
                     losses.update(loss.item())
 
                     loss.backward()
@@ -76,7 +75,7 @@ class Trainer:
             gray = images[1].to(self.device)
 
             preds = model(gray)
-            loss = self.criterion(preds, color)
+            loss = self.model.loss(preds, color)
 
             losses.update(loss.item())
 
