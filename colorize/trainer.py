@@ -28,7 +28,10 @@ class Trainer:
         )
         self.model = Colorizer()
         self.best_loss = float("inf")
-        self.optimizer = optim.Adam(self.model.parameters(), lr=1e-4)
+        self.optimizer = optim.Adam(self.model.parameters(), lr=5e-4)
+        self.scheduler = optim.lr_scheduler.CosineAnnealingLR(
+            optimizer=self.optimizer, T_max=args.epoch // 5, eta_min=5e-6
+        )
         self.log_dir = Path(args.log_dir)
         self.writer = SummaryWriter(log_dir=self.log_dir.as_posix())
 
@@ -59,10 +62,15 @@ class Trainer:
                     pbar.set_postfix(OrderedDict(Loss=losses.value))
 
             self.writer.add_scalar("train/loss", losses.avg, epoch + 1)
+            self.writer.add_scalar(
+                "train/lr", self.scheduler.get_last_lr()[0], epoch + 1
+            )
 
             torch.save(self.model.state_dict(), self.log_dir / "last_ckpt.pth")
 
             self.evaluate(self.model, epoch + 1)
+
+            self.scheduler.step()
 
     @torch.inference_mode()
     def evaluate(self, model: nn.Module, epoch: Optional[int] = None) -> None:
